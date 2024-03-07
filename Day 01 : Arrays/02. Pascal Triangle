@@ -1,0 +1,52 @@
+# Problem Name : [Pascal's Triangle](https://leetcode.com/problems/pascals-triangle/)
+
+## Description
+Given a non-negative integer `numRows`, generate the first `numRows` of Pascal's triangle.
+
+Pascal's triangle is a triangular array of binomial coefficients. Each row of the triangle corresponds to the coefficients of the binomial expansion of (a + b)^n.
+
+## Approach
+1. Initialize an empty list of lists to represent Pascal's triangle.
+2. Iterate through each row from 0 to `numRows - 1`.
+3. For each row, initialize a new list to store the elements.
+4. Add 1 at the beginning of each row.
+5. Calculate the elements between the first and last 1 by summing the elements from the previous row.
+6. Add 1 at the end of each row.
+7. Append the new row to the triangle list.
+8. Repeat the process until `numRows` rows are generated.
+
+## Java Solution
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+public class Solution {
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> pascalTriangle = new ArrayList<>();
+        
+        if (numRows == 0) 
+            return pascalTriangle;
+
+        pascalTriangle.add(new ArrayList<>());
+        pascalTriangle.get(0).add(1);
+
+        for (int i = 1; i < numRows; i++) {
+            List<Integer> prevRow = pascalTriangle.get(i - 1);
+            List<Integer> newRow = new ArrayList<>();
+            newRow.add(1);
+
+            for (int j = 1; j < prevRow.size(); j++) {
+                newRow.add(prevRow.get(j - 1) + prevRow.get(j));
+            }
+
+            newRow.add(1);
+            pascalTriangle.add(newRow);
+        }
+
+        return pascalTriangle;
+    }
+}
+```
+
+## Time Complexity
+- The time complexity of the solution is O(numRows^2), where `numRows` is the input integer representing the number of rows in Pascal's triangle. 
